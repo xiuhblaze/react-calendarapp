@@ -9,6 +9,7 @@ import { getMessagesES } from '../../helpers/getMessages';
 import { CalendarEvent } from '../components/CalendarEvent';
 import { useState } from 'react';
 import { CalendarModal } from '../components/CalendarModal';
+import { useUiStore } from '../../hooks';
 
 const eventsList = [
   { 
@@ -26,6 +27,7 @@ const eventsList = [
 ];
 
 export const CalendarPage = () => {
+  const { openDateModal } = useUiStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
   const eventStyleGetter = (event, start, end, isSeleced) => {
     //console.log({event, start, end, isSeleced});
@@ -41,7 +43,8 @@ export const CalendarPage = () => {
   };
 
   const onDoubleClick = (event) => {
-    console.log({ doubleClick: event});
+    // console.log({ doubleClick: event});
+    openDateModal();
   };
 
   const onSelect = (event) => {
