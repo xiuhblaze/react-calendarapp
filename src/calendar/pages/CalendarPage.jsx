@@ -9,26 +9,12 @@ import { getMessagesES } from '../../helpers/getMessages';
 import { CalendarEvent } from '../components/CalendarEvent';
 import { useState } from 'react';
 import { CalendarModal } from '../components/CalendarModal';
-import { useUiStore } from '../../hooks';
-
-const eventsList = [
-  { 
-    title: 'Cumpleaños de Naye',
-    notes: 'Comprar un regalo',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: '#0d6efd',
-    bgColorSelected: '#0a58ca',
-    user: {
-      uid: '1456',
-      name: 'Adrian'
-    }
-  }
-];
+import { useUiStore, useCalendarStore } from '../../hooks';
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore();
-  const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
+  const { events, activeEvent, setActiveEvent } = useCalendarStore();
+  const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
   const eventStyleGetter = (event, start, end, isSeleced) => {
     //console.log({event, start, end, isSeleced});
     const style = {
@@ -48,7 +34,7 @@ export const CalendarPage = () => {
   };
 
   const onSelect = (event) => {
-    console.log({ click: event});
+    setActiveEvent(event);
   };
 
   const onViewChanged = (event) => {
@@ -63,7 +49,7 @@ export const CalendarPage = () => {
       <Calendar
         culture='es'
         localizer={localizer}
-        events={eventsList}
+        events={ events }
         defaultView={ lastView }
         startAccessor="start"
         endAccessor="end"
