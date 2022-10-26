@@ -38,3 +38,26 @@
   outline: none;
   padding: 10px;
 }
+
+/* Floating Action Button */
+.fab { 
+  border-radius: 100%;
+  bottom: 25px;
+  font-size: 20px;
+  position: fixed;
+  right: 25px;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+  width: 64px;
+  height: 64px;
+}
+
+.fab-delete { 
+  border-radius: 100%;
+  bottom: 25px;
+  font-size: 20px;  
+  position: fixed;
+  left: 25px;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+  width: 64px;
+  height: 64px;
+}
