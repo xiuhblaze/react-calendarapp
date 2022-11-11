@@ -1,11 +1,19 @@
+import { useAuthStore } from "../../hooks"
 
 export const Navbar = () => {
+
+    const { user, startLogout } = useAuthStore();
+
+    const onLogout = () => {
+        startLogout();
+    };
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <div className="container-fluid">
+      <div className="container">
         <span className="navbar-brand">
           <i className="fas fa-calendar-alt me-2"></i>
-          Calendar App
+          Calendar App - { user.name }
         </span>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -22,7 +30,7 @@ export const Navbar = () => {
               <a className="nav-link disabled">Disabled</a>
             </li>
           </ul>
-          <button className="d-flex btn btn-outline-danger">
+          <button className="d-flex btn btn-outline-danger" onClick={ onLogout }>
             <i className="fas fa-sign-out-alt me-2 pt-1"></i>
             Salir
           </button>
