@@ -7,18 +7,22 @@ import { getMessagesES } from '../../helpers/getMessages';
 import { CalendarEvent } from '../components/CalendarEvent';
 import { useState } from 'react';
 import { CalendarModal } from '../components/CalendarModal';
-import { useUiStore, useCalendarStore } from '../../hooks';
+import { useUiStore, useCalendarStore, useAuthStore } from '../../hooks';
 import { FabAddNew } from '../components/FabAddNew';
 import { FabDelete } from '../components/FabDelete';
+import { useEffect } from 'react';
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore();
-  const { events, activeEvent, setActiveEvent } = useCalendarStore();
+  const { user } = useAuthStore();
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
+
   const eventStyleGetter = (event, start, end, isSeleced) => {
     //console.log({event, start, end, isSeleced});
+    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid);    
     const style = {
-      backgroundColor: '#0d6efd',
+      backgroundColor: isMyEvent ? '#0d6efd' : '#343a40',
       borderRadius: '4px',
       color: '#fff'
     };
@@ -42,6 +46,11 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event);
     setLastView(event);
   };
+
+  useEffect(() => {
+    startLoadingEvents();
+  }, [])
+  
 
   return (
     <>

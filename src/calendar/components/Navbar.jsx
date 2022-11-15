@@ -23,12 +23,12 @@ export const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link" href="#">Link</a>
             </li>
             <li className="nav-item">
               <a className="nav-link disabled">Disabled</a>
-            </li>
+            </li> */}
           </ul>
           <button className="d-flex btn btn-outline-danger" onClick={ onLogout }>
             <i className="fas fa-sign-out-alt me-2 pt-1"></i>

@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import calendarApi from "../api/calendarApi";
 import { clearErrorMessage, onChecking, onLogin, onLogout, onRegister } from "../store/authSlice/authSlice";
+import { onLogoutCalendar } from "../store/calendar/calendarSlice";
 
 export const useAuthStore = () => {
-    const { status, user, errorMessage } = useSelector(state => state.auth);
+    const { status, user, errorMessage } = useSelector(state => state.auth);    
     const dispatch = useDispatch();
 
     const startLogin = async({ email, password }) => {
@@ -18,6 +19,7 @@ export const useAuthStore = () => {
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ name: data.name, uid: data.uid }));
         } catch (error) {
+          console.log(error);
             dispatch(onLogout('Usuario y/o contraseña no validos.'));
             setTimeout(() => {
                 dispatch(clearErrorMessage());
@@ -54,7 +56,7 @@ export const useAuthStore = () => {
 
         try {
             const { data } = await calendarApi.get('auth/renew');
-            console.log(data);
+            // console.log(data);
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ name: data.name, uid: data.uid }));
@@ -67,6 +69,7 @@ export const useAuthStore = () => {
 
     const startLogout = () => {
         localStorage.clear();
+        dispatch(onLogoutCalendar());
         dispatch(onLogout());
     };
 
